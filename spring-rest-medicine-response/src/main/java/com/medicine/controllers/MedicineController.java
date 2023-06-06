@@ -1,5 +1,7 @@
 package com.medicine.controllers;
 
+
+
 import java.util.List;
 
 import org.springframework.http.HttpHeaders;
@@ -101,6 +103,7 @@ public class MedicineController {
 		httpHeaders.add("info","returning a medicine by price");
 		return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(medicine);
 	}
+	//http://localhost:8080/medicine-api/medicines/name/category?name=zincate&category=tablets
 	@GetMapping("/medicines/name/category")
 	ResponseEntity<List<Medicine>> getByNameContaining(@RequestParam("name") String name,@RequestParam("category") String category)
 	{
@@ -109,6 +112,7 @@ public class MedicineController {
 		httpHeaders.add("info","Returning medicine by name contains");
 		return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(medicine);
 	}
+	@GetMapping("/medicines/brand")
 	ResponseEntity<List<Medicine>> getByBrandStaring(@RequestParam("brand") String brand)
 	{
 		List<Medicine> medicine=medicineService.getByBrandStarting(brand);

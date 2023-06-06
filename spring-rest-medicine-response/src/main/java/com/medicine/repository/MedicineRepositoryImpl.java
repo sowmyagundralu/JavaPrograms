@@ -6,17 +6,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.medicine.exceptions.MedicineNotFoundException;
 import com.medicine.model.Medicine;
 
+@Repository
 public class MedicineRepositoryImpl implements IMedicineRepository {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Override
 	public void addMedicine(Medicine medicine) {
-		String sql= "insert into medicine(name,medicineId,quantity,category,brand,price)values(?,MEDICINESEQ.nextval,?,?,?)";
+		String sql= "insert into medicine(name,medicineId,quantity,category,brand,price)values(?,MEDICINE_SEQ.nextval,?,?,?,?)";
 	 Object[] medicineArray = {medicine.getName(),medicine.getQuantity(),medicine.getCategory(),medicine.getBrand(),medicine.getPrice()};
 	 jdbcTemplate.update(sql,medicineArray);
 		
@@ -24,14 +26,14 @@ public class MedicineRepositoryImpl implements IMedicineRepository {
 
 	@Override
 	public void updateMedicine(int id, double price) {
-		String sql="update medicine set price=? where id=?";
+		String sql="update medicine set price=? where medicineId=?";
 		jdbcTemplate.update(sql,price,id);
 		
 	}
 
 	@Override
 	public void deleteMedicine(int id) {
-		String sql="delete from medicine where id=?";
+		String sql="delete from medicine where medicineId=?";
 		jdbcTemplate.update(sql,id);
 		
 	}
@@ -50,7 +52,7 @@ public class MedicineRepositoryImpl implements IMedicineRepository {
 		try
 		{
 			String sql="select * from medicine where medicineId=?";
-			jdbcTemplate.queryForObject(sql, new MedicineMapper(),medicineId);
+			medicine =jdbcTemplate.queryForObject(sql, new MedicineMapper(),medicineId);
 		}
 		catch (DataAccessException e) {
 			throw new MedicineNotFoundException("invalid id");	

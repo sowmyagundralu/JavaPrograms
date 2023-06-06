@@ -3,11 +3,13 @@ package com.medicine.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.medicine.exceptions.MedicineNotFoundException;
 import com.medicine.model.Medicine;
 import com.medicine.repository.IMedicineRepository;
 
+@Service
 public class MedicineServiceImpl implements IMedicineService {
 
 	@Autowired
