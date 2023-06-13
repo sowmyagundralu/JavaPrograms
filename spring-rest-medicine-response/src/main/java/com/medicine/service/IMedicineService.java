@@ -8,7 +8,7 @@ import com.medicine.model.Medicine;
 public interface IMedicineService {
 
 	void addMedicine(Medicine medicine);
-	void updateMedicine(int id,double price);
+	void updateMedicine(int uid,double price);
 	void deleteMedicine(int id);
 	
 	List<Medicine> getAll();

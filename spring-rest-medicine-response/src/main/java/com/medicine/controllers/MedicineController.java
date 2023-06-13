@@ -49,7 +49,7 @@ public class MedicineController {
 	ResponseEntity<Void> updateAllMedicines(@RequestBody Medicine medicine) {
 		medicineService.updateMedicine(medicine.getMedicineId(),medicine.getPrice());
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add("info","updating book");
+		httpHeaders.add("info","updating medicine");
 		return ResponseEntity .accepted().build();
 	}
 	@PatchMapping("/medicines/id/{medicineId}/price/{price}")  //write particular properties
@@ -113,6 +113,7 @@ public class MedicineController {
 		return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(medicine);
 	}
 	@GetMapping("/medicines/brand")
+	
 	ResponseEntity<List<Medicine>> getByBrandStaring(@RequestParam("brand") String brand)
 	{
 		List<Medicine> medicine=medicineService.getByBrandStarting(brand);

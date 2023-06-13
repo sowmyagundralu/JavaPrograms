@@ -85,26 +85,39 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		return ResponseEntity.status(status).headers(httpHeaders).body(errors);		
 	}
 
+	
+	@ExceptionHandler(MedicineNotFoundException.class)
+	public ResponseEntity<Object> handleMedicineNotFound(MedicineNotFoundException ex)
+	{
+		String message=ex.getMessage();
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.add("info", "medicine not found");
+		List<Object> error = Arrays.asList("medicine not found");
+		ApiErrors errors = new ApiErrors(LocalDateTime.now(),message,HttpStatus.INTERNAL_SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR.value(),error);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(httpHeaders).body(errors);
+		
+	}
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<Object> handleUserNotFound(UserNotFoundException ex)
+	{
+		String message=ex.getMessage();
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.add("info", "user not found");
+		List<Object> error = Arrays.asList("user not found");
+		ApiErrors errors = new ApiErrors(LocalDateTime.now(),message,HttpStatus.INTERNAL_SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR.value(),error);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(httpHeaders).body(errors);
+		
+	}
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleException(Exception ex)
 	{
 		String message=ex.getMessage();
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add("info", "medicine not found");
-		List<Object> error = Arrays.asList("medicine not available");
+		httpHeaders.add("info", "other");
+		List<Object> error = Arrays.asList("other exception raised");
 		ApiErrors errors = new ApiErrors(LocalDateTime.now(),message,HttpStatus.INTERNAL_SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR.value(),error);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(httpHeaders).body(errors);
 		
 	}
-	@ExceptionHandler(MedicineNotFoundException.class)
-	public ResponseEntity<Object> handleMedicineNotFoundException(MedicineNotFoundException ex)
-	{
-		String message=ex.getMessage();
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add("info", "medicine not found");
-		List<Object> error = Arrays.asList("other exceptions raised");
-		ApiErrors errors = new ApiErrors(LocalDateTime.now(),message,HttpStatus.INTERNAL_SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR.value(),error);
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(httpHeaders).body(errors);
-		
-	}
+	
 }
